@@ -3,7 +3,7 @@ const apiVersion = require('../package.json').version;
 module.exports = async function (fastify, opts) {
   
   fastify.get('/', (request, reply) => {
-    reply.send({ status: 'online', apiVersion });
+    reply.send({ status: 'ondsline', apiVersion });
   });
 
   next();
