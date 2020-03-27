@@ -1,8 +1,8 @@
-import { AUTH_ERRORS, EXCEPTIONS, HTTP_STATUS_CODES } from '../../errors/error';
+const { AUTH_ERRORS, EXCEPTIONS, HTTP_STATUS_CODES } = require('../../errors/error.js');
 // If you prefer async/await, use the following
 //
 module.exports = async (fastify, opts) => {
-  fastify.get('/auth/forgot-password', async (request, reply) => {
+  fastify.get(`/auth/forgot-password`, async (request, reply) => {
     let code, res;
     try {
       const { email } = request;
@@ -15,7 +15,7 @@ module.exports = async (fastify, opts) => {
     return reply.code(code).send(res);
   });
 
-  fastify.post('/auth/login', async (request, reply) => {
+  fastify.post(`/auth/login`, async (request, reply) => {
     let res;
     try {
       const { email, password } = request.body;
@@ -28,7 +28,7 @@ module.exports = async (fastify, opts) => {
     return reply.code(code).send(res);
   });
 
-  fastify.post('/auth/register', async (request, reply) => {
+  fastify.post(`/auth/register`, async (request, reply) => {
     let res;
     try {
       const { email, password } = request.body;
