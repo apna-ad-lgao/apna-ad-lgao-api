@@ -21,10 +21,27 @@ module.exports = async (fastify, opts) => {
     try {
       const { email, password } = request.body;
       if (!email || !password) throw new Error(AUTH_ERRORS.INVALID_CREDENTIAL.message);
-      const token = fastify.jwt.sign({ email, password });
-      console.log(`token is: ${token}`);
-      code = HTTP_STATUS_CODES.SUCCESS;
-      res = { token };
+      // check if account exists
+      let successMessage = await request.DB.models.User.findOne({
+        where: {
+          email: email,
+          password: password,
+        }
+      });
+      if(successMessage.length != 1) { 
+        const token = fastify.jwt.sign({ email, password });
+        delete successMessage.dataValues.id;
+        delete successMessage.dataValues.password;
+        delete successMessage.dataValues.created;
+        delete successMessage.dataValues.updated;
+        successMessage.dataValues.token = token;
+        const profile = successMessage;
+        code = HTTP_STATUS_CODES.SUCCESS;
+        res = profile;
+      } else {
+        code = AUTH_ERRORS.INVALID_CREDENTIAL.code;
+        res = { message: AUTH_ERRORS.INVALID_CREDENTIAL.message };
+      }      
     } catch(exception) {
       code = HTTP_STATUS_CODES.ERROR;
       res = { message: exception.message || EXCEPTIONS.SOME_ERROR.message };
