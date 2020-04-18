@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const path = require('path');
 const AutoLoad = require('fastify-autoload');
+const fastifyCors = require('fastify-cors');
 const fastifyJWT = require('fastify-jwt');
 const isProd = 'production';
 const fastify = require('fastify')({
@@ -73,7 +74,11 @@ let opts;
   });
 
   fastify.register(fastifyJWT, {
-    secret: 'supersecret'
+    secret: 'apn@adad@89445462'
+  });
+
+  fastify.register(fastifyCors, { 
+    // put your options here
   });
 
   const start = async () => {

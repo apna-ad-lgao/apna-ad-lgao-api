@@ -3,7 +3,7 @@
 
 -- create coutry table
 
-create table country (
+create table Country (
 id int auto_increment,
 name varchar(120) not null unique key,
 alpha2code varchar(2) not null unique key,
@@ -14,7 +14,7 @@ primary key (id) );
 
 -- fill defaualt values in country table
 
-insert into country (alpha2code, alpha3code, isonumeric, name, continent)
+insert into Country (alpha2code, alpha3code, isonumeric, name, continent)
 values
 (
 'AF', 'AFG', 4, 'Afghanistan', 'AS'
@@ -954,7 +954,7 @@ values
 
 -- create state
 
-create table state (
+create table State (
 id int auto_increment,
 name varchar(120) not null,
 countryId int not null, 
@@ -965,13 +965,13 @@ created datetime default current_timestamp,
 updated datetime default current_timestamp on update current_timestamp,
 index countryIndex (countryId),
 foreign key (countryId)
-	references country(id)
+	references Country(id)
     on delete cascade,
 primary key (id) );
 
 -- insert value in state for afghanistan
 
-insert into state (loccode, name, status, countryid)
+insert into State (loccode, name, status, countryid)
 values
     ('AF ASH','Ali Shirzayi','RQ',1),
     ('AF BAG','Bagram','RL',1),
@@ -1041,7 +1041,7 @@ values
 
     -- insert states for indai
 
-    insert into state (loccode, name, status, countryid)
+    insert into State (loccode, name, status, countryid)
 values
     ('IN NRP','Aal-SEZ/Vishakhapatnam','RQ',102.0),
     ('IN API','Aap-SEZ/Ahmedabad','RQ',102.0),
@@ -2369,7 +2369,7 @@ values
     updated datetime default current_timestamp on update current_timestamp,
     index stateIndex (id, stateId),
     foreign key (stateId)
-        references state(id)
+        references State(id)
         on delete cascade,
     primary key (id) );
 
@@ -2379,8 +2379,10 @@ values
     name  varchar(120) not null,
     mobile  varchar(10) not null,
     email  varchar(320) not null,
+    password  varchar(320) not null,
     image  varchar(200) not null,
     isAdmin boolean default false,
+    isPartner boolean default false,
     isHidden boolean default false,
     created datetime default current_timestamp,
     updated datetime default current_timestamp on update current_timestamp,
