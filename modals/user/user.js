@@ -38,17 +38,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     created: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     updated: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.DATE,
+      allowNull: false,
     },
   }, {
     createdAt: 'created',
     updatedAt: 'updated',
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
   });
   return User;

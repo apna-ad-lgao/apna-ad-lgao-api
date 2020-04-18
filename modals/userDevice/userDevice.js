@@ -21,17 +21,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       created: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.DATE,
+        allowNull: false,
       },
       updated: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.DATE,
+        allowNull: false,
       },
     }, {
       createdAt: 'created',
       updatedAt: 'updated',
-      timestamps: false,
+      timestamps: true,
       freezeTableName: true,
     });
     return UserDevice;
