@@ -2386,7 +2386,8 @@ values
     isHidden boolean default false,
     created datetime default current_timestamp,
     updated datetime default current_timestamp on update current_timestamp,
-    primary key (id)
+    primary key (id),
+    unique key (email)
     );
 
     -- Device
