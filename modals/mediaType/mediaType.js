@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-  }, {});
+  }, {
+    createdAt: 'created',
+    updatedAt: 'updated',
+    timestamps: false,
+    freezeTableName: true,
+  });
   return MediaType;
 };

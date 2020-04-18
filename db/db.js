@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
 const Sequelize = require('sequelize');
+const fs = require('fs');
+const path = require('path');
 
 const {
   SQL_DB_USER,
@@ -13,6 +15,23 @@ const {
 const isProd = NODE_ENV === 'production';
 
 console.log(`user is: ${SQL_DB_USER}`);
+
+const modelPath = path.join(__dirname, '../modals/');
+const db = {};
+
+// fs
+//   .readdirSync(modelPath)
+//   .filter(file => (file.indexOf('.') !== 0) && (file.slice(-3) === '.js'))
+//   .forEach((file) => {
+//     const model = sequelizeconnection.import(modelPath + file);
+//     db[model.name] = model;
+//   });
+
+//     Object.keys(db).forEach((modelName) => {
+//       if (db[modelName].associate) {
+//         db[modelName].associate(db);
+//       }
+//     });
 
 const Conn = new Sequelize({
   username: SQL_DB_USER,
@@ -37,6 +56,20 @@ const Conn = new Sequelize({
   logging: !isProd,
 });
 
+
+fs.readdirSync(modelPath)
+  .forEach((file) => {
+    if (file != 'currency') {
+      const model = Conn.import(modelPath + file + "/" + file + ".js");
+      db[model.name] = model;
+    }
+  });
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
 Conn
   .authenticate()
   .then(async() => {
@@ -49,8 +82,9 @@ Conn
         mapToModel: true,
       },
     );
-    console.log(`userData is: ${JSON.stringify(userData)}`);
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err); // eslint-disable-line
   });
+
+  module.exports = Conn;

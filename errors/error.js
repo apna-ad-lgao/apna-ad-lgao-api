@@ -7,6 +7,10 @@ const AUTH_ERRORS = Object.freeze({
         code: 500,
         message: 'No Email Found!!!'
     },
+    INVALID_DETAIL: {
+        code: 500,
+        message: 'Information is missing!!!'
+    },
 });
 const ADS_ERRORS = Object.freeze();
 const EXCEPTIONS = Object.freeze({

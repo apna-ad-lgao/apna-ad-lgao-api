@@ -2380,7 +2380,7 @@ values
     mobile  varchar(10) not null,
     email  varchar(320) not null,
     password  varchar(320) not null,
-    image  varchar(200) not null,
+    image  varchar(200) null,
     isAdmin boolean default false,
     isPartner boolean default false,
     isHidden boolean default false,

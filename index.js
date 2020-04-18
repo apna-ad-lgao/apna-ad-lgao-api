@@ -20,33 +20,7 @@ const {
 const DB = require('./db/db');
 
 const PORT = process.env.PORT || 4001;
-// module.exports = function (fastify, opts, next) {
-//   // Place here your custom code!
-
-//   // Do not touch the following lines
-
-//   // This loads all plugins defined in plugins
-//   // those should be support plugins that are reused
-//   // through your application
-//   fastify.register(AutoLoad, {
-//     dir: path.join(__dirname, 'plugins'),
-//     options: Object.assign({}, opts),
-//   });
-
-//   // This loads all plugins defined in services
-//   // define your routes in one of these
-//   fastify.register(AutoLoad, {
-//     dir: path.join(__dirname, 'services'),
-//     options: Object.assign({}, opts),
-//   });
-
-//   fastify.register(fastifyJWT, {
-//     secret: 'supersecret'
-//   });
-
-//   // Make sure to call next when done
-//   next();
-// };
+const Sequelize = require('sequelize');
 
 fastify.addHook('preHandler', async (req, res) => {
   // const { authorization } = req.headers;
@@ -57,6 +31,10 @@ fastify.addHook('preHandler', async (req, res) => {
 
   // if (!authorizedOhrId) { return sentAuthError('You must send an Authorization header.'); }
   req.DB = DB;
+  req.SELECT = Sequelize.QueryTypes.SELECT;
+  req.INSERT = Sequelize.QueryTypes.INSERT;
+  req.UPDATE = Sequelize.QueryTypes.UPDATE;
+  req.DELETE = Sequelize.QueryTypes.DELETE;
 });
 
 let opts;
