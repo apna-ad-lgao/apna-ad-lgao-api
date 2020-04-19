@@ -1,3 +1,4 @@
+const { AUTH_ERRORS, AUTH_SUCCESS, EXCEPTIONS, HTTP_STATUS_CODES } = require('./errors/error.js');
 const { gql, makeExecutableSchema } = require('apollo-server-fastify');
 const { activateUser, createUser, deleteUser, existUser, getUser, updateUser
 } = require('./modals/user/function');
@@ -22,7 +23,7 @@ const typeDefs = gql`
   }
   type Mutation {
     activateUser(userId: Int!): User
-    # createUser(email: !String, password: !String, mobile: !String, name: !String): User
+    createUser(email: String!, password: String!, mobile: String!, name: String!): User
     deleteUser(userId: Int!): User
     updateUser(id: Int!): User
   }
@@ -60,24 +61,24 @@ const resolvers = {
           data = await activateUser(DB, userId);
         }
       } catch(ex) {
-        data = ex.message; 
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
       }
       return data;
     },
-    // createUser: async(parent, args, context, info) => {
-    //   let code = null, data = null;
-    //   try {
-    //     const { DB, profile } = context;
-    //     const { email, password, mobile, name } = args;
-    //     if (!email || !password || !mobile || !name) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
-    //     code = AUTH_SUCCESS.ACOUNT_CREATED.code;  
-    //     data = createUser(DB, email, mobile, name, password);
-    //   } catch(ex) {
-    //     code = HTTP_STATUS_CODES.ERROR;
-    //     data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
-    //   }
-    //   return data;
-    // },
+    createUser: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { email, password, mobile, name } = args;
+        if (!email || !password || !mobile || !name) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        code = AUTH_SUCCESS.ACOUNT_CREATED.code;  
+        data = await createUser(DB, email, mobile, name, password);
+      } catch(ex) {
+        code = HTTP_STATUS_CODES.ERROR;
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
     deleteUser: async(parent, args, context, info) => {
       let data = null;
       try {
@@ -87,7 +88,7 @@ const resolvers = {
           data = await deleteUser(DB, userId);
         }
       } catch(ex) {
-        data = ex.message; 
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
       }
       return data;
     },
@@ -99,7 +100,7 @@ const resolvers = {
           data = activateUser(DB, userId);
         }
       } catch(ex) {
-        data = ex.message; 
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
       }
       return data;
     },
