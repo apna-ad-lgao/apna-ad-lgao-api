@@ -32,7 +32,7 @@ module.exports = async (fastify, opts) => {
         opts.expiresIn = 120;  //token expires in 2min
         // const token = req.jwt.sign({ email }, opts);
         const token = request.jwt.sign({
-          data: email
+          email: email
         }, request.JWTSecretKey, { expiresIn: '1h' });
         delete successMessage.dataValues.id;
         delete successMessage.dataValues.password;

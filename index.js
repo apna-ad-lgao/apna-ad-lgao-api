@@ -58,9 +58,56 @@ fastify.register(fastifyCors, {
   // put your options here
 });
 
+// const apolloServer = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   context: async ({ req }) => {
+//     try {
+//       const { authorization } = req.headers;
+//       const { url } = req;
+//       let profile = {};
+//       if(url && whitelistURLs && !whitelistURLs.find(whiteListurl => url.includes(whiteListurl))) {
+//         // jwt sign decoding
+//         const sdas = authorization.split(" ");
+//         const data = await jwt.verify(sdas[1], JWT_SECRET_KEY);
+//         profile = await DB.models.User.findOne({
+//           where: {
+//             email: data && data.email ? data.email : '',
+//           }
+//         });
+//         req.profile = profile;
+//       }
+//       req.DB = DB;
+//       return { DB, profile };
+//     } catch(ex) {
+//       res.code(401).send(new Error(ex.message));
+//     }
+//   },
+// });
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  context: async ({ req }) => {
+    try {
+      const { authorization } = req.headers;
+      const { url } = req;
+      let profile = {};
+      if(authorization && url && whitelistURLs && !whitelistURLs.find(whiteListurl => url.includes(whiteListurl))) {
+        // jwt sign decoding
+        const sdas = authorization.split(" ");
+        const data = await jwt.verify(sdas[1], JWT_SECRET_KEY);
+        profile = await DB.models.User.findOne({
+          where: {
+            email: data && data.email ? data.email : '',
+          }
+        });
+        profile = profile;
+      }
+      return { DB, profile };
+    } catch(ex) {
+      res.code(401).send(new Error(ex.message));
+    }
+  },
 });
 
 fastify.register(apolloServer.createHandler());
@@ -68,8 +115,7 @@ fastify.register(apolloServer.createHandler());
 const whitelistURLs = [
   '/status',
   '/auth',
-  '/public-banners',
-  '/graphql'
+  '/public-banners'
 ];
 
 fastify.addHook('preHandler', async (req, res) => {
