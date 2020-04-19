@@ -5,6 +5,8 @@ const path = require('path');
 const AutoLoad = require('fastify-autoload');
 const fastifyCors = require('fastify-cors');
 const fastifyJWT = require('fastify-jwt');
+const { ApolloServer, gql } = require('apollo-server-fastify');
+const { typeDefs, resolvers } = require('./module');
 const jwt = require('jsonwebtoken');
 const isProd = 'production';
 const fastify = require('fastify')({
@@ -56,10 +58,18 @@ fastify.register(fastifyCors, {
   // put your options here
 });
 
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+fastify.register(apolloServer.createHandler());
+
 const whitelistURLs = [
   '/status',
   '/auth',
-  '/public-banners'
+  '/public-banners',
+  '/graphql'
 ];
 
 fastify.addHook('preHandler', async (req, res) => {

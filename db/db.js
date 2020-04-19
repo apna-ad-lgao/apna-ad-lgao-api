@@ -75,13 +75,6 @@ Conn
   .then(async() => {
     console.log(`DB connection has been established successfully.:${SQL_DB_HOST}`); // eslint-disable-line
     console.log(`finished ${Conn.model.state}`);
-    const userData = await Conn.query(
-      'Select * from UserCompany', {
-        model: Conn.model.UserCompany,
-        type: Sequelize.QueryTypes.SELECT,
-        mapToModel: true,
-      },
-    );
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err); // eslint-disable-line
