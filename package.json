@@ -38,6 +38,7 @@
     "fastify-plugin": "^1.5.0",
     "graphql": "^14.6.0",
     "graphql-sequelize": "^9.4.0",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.4"
   },

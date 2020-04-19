@@ -1,6 +1,6 @@
+require('dotenv').config();
+
 const { AUTH_ERRORS, AUTH_SUCCESS, EXCEPTIONS, HTTP_STATUS_CODES } = require('../../errors/error.js');
-// If you prefer async/await, use the following
-//
 const apiVersion = '/api/v1';
 module.exports = async (fastify, opts) => {
   fastify.get(`${apiVersion}/auth/forgot-password`, async (request, reply) => {
@@ -29,7 +29,11 @@ module.exports = async (fastify, opts) => {
         }
       });
       if(successMessage.length != 1) { 
-        const token = fastify.jwt.sign({ email, password });
+        opts.expiresIn = 120;  //token expires in 2min
+        // const token = req.jwt.sign({ email }, opts);
+        const token = request.jwt.sign({
+          data: email
+        }, request.JWTSecretKey, { expiresIn: '1h' });
         delete successMessage.dataValues.id;
         delete successMessage.dataValues.password;
         delete successMessage.dataValues.created;
