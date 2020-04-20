@@ -1,5 +1,18 @@
 const { AUTH_ERRORS, AUTH_SUCCESS, EXCEPTIONS, HTTP_STATUS_CODES } = require('./errors/error.js');
 const { gql, makeExecutableSchema } = require('apollo-server-fastify');
+// address
+const { activateAddress, createAddress, deleteAddress, existAddress, getAddress, getAllAddress, updateAddress } = require('./modals/address/function');
+// banner
+const { activateBanner, createBanner, deleteBanner, existBanner, getBanner, getAllBanner, updateBanner } = require('./modals/banner/function');
+// campaign
+const { activateCampaign, createCampaign, deleteCampaign, existCampaign, getCampaign, getAllCampaign, updateCampaign } = require('./modals/campaign/function');
+// campaignTags
+const { activateCampaignTags, createCampaignTags, deleteCampaignTags, existCampaignTags, getCampaignTags, getAllCampaignTags, updateCampaignTags } = require('./modals/campaignTags/function');
+// category
+const { activateCategory, createCategory, deleteCategory, existCategory, getCategory, getAllCategory, updateCategory } = require('./modals/category/function');
+// company
+const { activateCompany, createCompany, deleteCompany, existCompany, getCompany, getAllCompany,
+  updateCompany } = require('./modals/company/function');
 // country
 const { createCountry, existCountry, getCountry, getAllCountries, getCountries, updateCountry
 } = require('./modals/country/function');
@@ -33,6 +46,59 @@ const { activateUserDevice, createUserDevice, deleteUserDevice, existUserDevice,
 
 // The GraphQL schema
 const typeDefs = gql`
+  type Campaign {
+    id: Int
+    name: String
+    description: String
+    isHidden: Boolean
+    created: String
+    updated: String
+  }
+  type CampaignTags {
+    id: Int
+    campaignId: Int
+    tagsId: Int
+    isHidden: Boolean
+    created: String
+    updated: String
+  }
+  type Category {
+    id: Int
+    name: String
+    isHidden: Boolean
+    created: String
+    updated: String
+  }
+  type Company {
+    id: Int
+    name: String
+    description: String
+    image: String
+    isParentCompany: Boolean
+    addressId: Int
+    latitude: Int
+    longitude: Int
+    industryId: Int
+    gst: String
+    angellist: String 
+    discord: String
+    facebook: String
+    github: String
+    google: String
+    instagram: String
+    justdial: String
+    linkedin: String
+    pinterest: String
+    slack: String
+    tiktok: String
+    twitter: String
+    web: String
+    youtube: String
+    isActive: Boolean
+    isHidden: Boolean
+    created: String
+    updated: String    
+  }
   type Country {
     id: Int
     name: String
@@ -125,6 +191,17 @@ const typeDefs = gql`
     updated: String 
   }
   type Query {
+    # campaign
+    campaigns(id: Int, name: String, description: String, isHidden: Boolean, created: String, updated: String): [Campaign]
+    # campaignTags
+    campaignTags(id: Int, campaignId: Int, tagsId: Int, isHidden: Boolean, created: String, updated: String): [CampaignTags]
+    # category
+    categories(id: Int, name: String, isHidden: Boolean, created: String, updated: String): [Category]
+    # company
+    companies(id: Int, name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int, latitude: Int, longitude: Int,
+    industryId: Int, gst: String, angellist: String, discord: String, facebook: String, github: String, google: String, instagram: String,
+    justdial: String, linkedin: String, pinterest: String, slack: String, tiktok: String, twitter: String, web: String, youtube: String,
+    isActive: Boolean, isHidden: Boolean, created: String, updated: String): [Company] 
     # country
     countries(id: Int, name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): [Country]
     # device
@@ -148,6 +225,21 @@ const typeDefs = gql`
     userDevices(id: Int, userId: Int, deviceId: Int, isHidden: Boolean, created: String, updated: String): [UserDevice]
   }
   type Mutation {
+    # campaign
+    createCampaign(name: String, description: String): Campaign
+    updateCampaign(name: String, description: String, isHidden: Boolean): Campaign
+    # campaignTags
+    createCampaignTags(campaignId: Int, tagsId: Int): CampaignTags
+    updateCampaignTags(campaignId: Int, tagsId: Int, isHidden: Boolean): CampaignTags
+    # category
+    createCategory(name: String): Category
+    updateCategory(name: String, isHidden: Boolean): Category
+    # company
+    createCompany(name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int): Company
+    updateCompany(id: Int, name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int, latitude: Int, longitude: Int,
+    industryId: Int, gst: String, angellist: String, discord: String, facebook: String, github: String, google: String, instagram: String,
+    justdial: String, linkedin: String, pinterest: String, slack: String, tiktok: String, twitter: String, web: String, youtube: String,
+    isActive: Boolean, isHidden: Boolean, created: String, updated: String): Company
     # country
     createCountry(name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): Country
     updateCountry(name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): Country
@@ -190,6 +282,28 @@ const typeDefs = gql`
 // A map of functions which return data for the schema.
 const resolvers = {
   Query: {
+    // categories
+    categories: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        data = getAllCategory(DB, args);
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },
+    // companies
+    companies: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        data = getAllCompany(DB, args);
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },
     // country
     countries: async(parent, args, context, info) => {
       let code = null, data = null;
@@ -213,16 +327,16 @@ const resolvers = {
       return data;
     },
     // industries
-    // industries: async(parent, args, context, info) => {
-    //   let code = null, data = null;
-    //   try {
-    //     const { DB, profile } = context;
-    //     data = getAllIndustry(DB, args);
-    //   } catch(ex) {
-    //     data = ex.message; 
-    //   }
-    //   return data;
-    // },
+    industries: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        data = getAllIndustry(DB, args);
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },
     // mediaType
     mediaTypes: async(parent, args, context, info) => {
       let code = null, data = null;
@@ -295,6 +409,118 @@ const resolvers = {
     },
   },
   Mutation: {
+    // campaign
+    createCampaign: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name, description } = args;
+        if (!name || !description) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (profile.isAdmin || profile.isOwner || profile.isPartner) {
+          data = await createCampaign(DB, name, description);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateCampaign: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name, description, isHidden } = args;
+        if ((profile.isAdmin || profile.isOwner || profile.isPartner) && id) {
+          data = await updateCampaign(DB, id, { name, description, isHidden });
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    }, 
+    // campaignTags
+    createCampaignTags: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { campaignId, tagsId } = args;
+        if (!name) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (profile.isAdmin || profile.isOwner || profile.isPartner) {
+          data = await createCampaignTags(DB, campaignId, tagsId);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateCampaignTags: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { campaignId, tagsId, isHidden } = args;
+        if ((profile.isAdmin || profile.isOwner || profile.isPartner) && id) {
+          data = await updateCampaignTags(DB, id, { campaignId, tagsId, isHidden });
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },    
+    // category
+    createCategory: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name } = args;
+        if (!name) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (profile.isAdmin) {
+          data = await createCategory(DB, name);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateCategory: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name, isHidden } = args;
+        if (profile.isAdmin && id) {
+          data = await updateCategory(DB, id, { name, isHidden });
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    // company
+    createCompany: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name, description, image, isParentCompany, addressId } = args;
+        if (!name || !description || !image || !isParentCompany || !addressId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (!profile.isHidden || profile.isAdmin) {
+          data = await createCompany(DB, name, description, image, isParentCompany, addressId);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateCompany: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name, description, image, isParentCompany, addressId, isHidden } = args;
+        if ((!profile.isHidden || profile.isAdmin) && id) {
+          data = await updateCompany(DB, id, { name, description, image, isParentCompany, addressId, isHidden });
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
     // country
     createCountry: async(parent, args, context, info) => {
       let code = null, data = null;
@@ -346,7 +572,7 @@ const resolvers = {
       }
       return data;
     },
-    // mediaType
+    // industry
     createIndustry: async(parent, args, context, info) => {
       let code = null, data = null;
       try {

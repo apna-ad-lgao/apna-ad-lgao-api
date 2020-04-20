@@ -45,6 +45,13 @@ const getAddress = async (DB, id) => {
     return existAddress(DB,id);
 };
 
+const getAllAddress = async (DB, args) => {
+    const addressDetails = await DB.models.Address.findAll({
+        where: args
+    });
+    return addressDetails;
+};
+
 const updateAddress = async (DB, id, args) => {
     let addressDetail = await existAddress(DB, id);
     if (addressDetail && addressDetail.id) {
@@ -54,5 +61,5 @@ const updateAddress = async (DB, id, args) => {
 };
 
 module.exports = {
-    activateAddress, createAddress, deleteAddress, existAddress, getAddress, updateAddress
+    activateAddress, createAddress, deleteAddress, existAddress, getAddress, getAllAddress, updateAddress
 };

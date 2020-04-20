@@ -17,12 +17,13 @@ const activateCompany = async (DB, id) => {
     return companyDetail;
 };
 
-const createCompany = async (DB, name, description, image, isParentCompany) => {
+const createCompany = async (DB, name, description, image, isParentCompany, addressId) => {
     let companyDetail = await DB.models.Company.create({
         name: name,
         description: description,
         image: image,
         isParentCompany: isParentCompany,
+        addressId: addressId,
     });
     return companyDetail;
 };
@@ -43,6 +44,13 @@ const getCompany = async (DB, id) => {
     return existCompany(DB,id);
 };
 
+const getAllCompany = async (DB, id) => {
+    const companyDetails = await DB.models.Company.findAll({
+        where: args
+    });
+    return companyDetails;
+};
+
 const updateCompany = async (DB, id, args) => {
     let companyDetail = await existCompany(DB, id);
     if (companyDetail && companyDetail.id) {
@@ -52,5 +60,5 @@ const updateCompany = async (DB, id, args) => {
 };
 
 module.exports = {
-    activateCompany, createCompany, deleteCompany, existCompany, getCompany, updateCompany
+    activateCompany, createCompany, deleteCompany, existCompany, getCompany, getAllCompany, updateCompany
 };
