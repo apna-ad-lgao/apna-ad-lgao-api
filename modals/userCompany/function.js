@@ -51,7 +51,7 @@ const getAllUserCompany = async (DB, args) => {
 const updateUserCompany = async (DB, id, args) => {
     let UserCompanyDetail = await existUserCompany(DB, id);
     if (UserCompanyDetail && UserCompanyDetail.id) {
-        UserCompanyDetail = await DB.models.UserCompany.update(args);
+        UserCompanyDetail = await DB.models.UserCompany.update(args, { where: { id: id }});
     }
     return UserCompanyDetail;
 };

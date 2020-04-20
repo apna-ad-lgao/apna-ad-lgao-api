@@ -46,7 +46,7 @@ const getUser = async (DB, id) => {
 const updateUser = async (DB, id, args) => {
     let userDetail = await existUser(DB, id);
     if (userDetail && userDetail.id) {
-        userDetail = await DB.models.User.update(args);
+        userDetail = await DB.models.User.update(args, { where: { id: id }});
     }
     return userDetail;
 };

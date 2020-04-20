@@ -46,7 +46,7 @@ const getCompany = async (DB, id) => {
 const updateCompany = async (DB, id, args) => {
     let companyDetail = await existCompany(DB, id);
     if (companyDetail && companyDetail.id) {
-        companyDetail = await DB.models.Company.update(args);
+        companyDetail = await DB.models.Company.update(args, { where: { id: id }});
     }
     return companyDetail;
 };

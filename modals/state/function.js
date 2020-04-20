@@ -83,7 +83,7 @@ const updateState = async (DB, id, args) => {
     let stateDetail = await existState(DB, id);
     if (stateDetail && stateDetail.id) {
         stateDetail = await DB.models.State.update(args, {
-            where: { id: state.id }
+            where: { id: id }
         });
         stateDetail = await existState(DB, id);
     }

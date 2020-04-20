@@ -51,7 +51,7 @@ const getAllUserDevice = async (DB, args) => {
 const updateUserDevice = async (DB, id, args) => {
     let UserDeviceDetail = await existUserDevice(DB, id);
     if (UserDeviceDetail && UserDeviceDetail.id) {
-        UserDeviceDetail = await DB.models.UserDevice.update(args);
+        UserDeviceDetail = await DB.models.UserDevice.update(args, { where: { id: id }});
     }
     return UserDeviceDetail;
 };

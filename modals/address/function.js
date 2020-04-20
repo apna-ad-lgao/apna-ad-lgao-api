@@ -48,7 +48,7 @@ const getAddress = async (DB, id) => {
 const updateAddress = async (DB, id, args) => {
     let addressDetail = await existAddress(DB, id);
     if (addressDetail && addressDetail.id) {
-        addressDetail = await DB.models.Address.update(args);
+        addressDetail = await DB.models.Address.update(args, { where: { id: id }});
     }
     return addressDetail;
 };
