@@ -1,56 +1,63 @@
-const existUser = async (DB, id) => {
-    const userDetail = await DB.models.User.findOne({
+const existDevice = async (DB, id) => {
+    const deviceDetail = await DB.models.Device.findOne({
         where: {id: id}
     });
-    return userDetail;
+    return deviceDetail;
 };
 
-const activateUser = async (DB, id) => {
-    let userDetail = await existUser(DB, id);
-    if (userDetail && userDetail.id) {
-        userDetail = await DB.models.User.update(
+const activateDevice = async (DB, id) => {
+    let deviceDetail = await existDevice(DB, id);
+    if (deviceDetail && deviceDetail.id) {
+        deviceDetail = await DB.models.Device.update(
             { isHidden: 0, }, 
             { returning: true, where: { id: id }}
         );
-        userDetail = await existUser(DB, id);
+        deviceDetail = await existDevice(DB, id);
     }
-    return userDetail;
+    return deviceDetail;
 };
 
-const createUser = async (DB, email, mobile, name, password) => {
-    let userDetail = await DB.models.User.create({
-        email: email,
-        mobile: mobile,
-        name: name,
-        password: password,
+const createDevice = async (DB, uuid, model, platform, fingerprint) => {
+    let deviceDetail = await DB.models.Device.create({
+        uuid: uuid,
+        model: model,
+        platform: platform,
+        fingerprint: fingerprint,
     });
-    return userDetail;
+    return deviceDetail;
 };
 
-const deleteUser = async (DB, id) => {
-    let userDetail = await existUser(DB, id);
-    if (userDetail && userDetail.id) {
-        userDetail = await DB.models.User.update(
+const deleteDevice = async (DB, id) => {
+    let deviceDetail = await existDevice(DB, id);
+    if (deviceDetail && deviceDetail.id) {
+        deviceDetail = await DB.models.Device.update(
             { isHidden: 1, }, 
             { returning: true, where: { id: id }}
         );
-        userDetail = await existUser(DB, id);
+        deviceDetail = await existDevice(DB, id);
     }
-    return userDetail;
+    return deviceDetail;
 };
 
-const getUser = async (DB, id) => {
-    return existUser(DB,id);
+const getDevice = async (DB, id) => {
+    return existDevice(DB,id);
 };
 
-const updateUser = async (DB, id, args) => {
-    let userDetail = await existUser(DB, id);
-    if (userDetail && userDetail.id) {
-        userDetail = await DB.models.User.update(args, { where: { id: id }});
+const getAllDevice = async (DB, args) => {
+    const deviceDetail = await DB.models.Device.findAll({
+        where: args
+    });
+    return deviceDetail;
+};
+
+const updateDevice = async (DB, id, args) => {
+    let deviceDetail = await existDevice(DB, id);
+    if (deviceDetail && deviceDetail.id) {
+        deviceDetail = await DB.models.Device.update(args, { where: { id: id }});
     }
-    return userDetail;
+    return deviceDetail;
 };
 
 module.exports = {
-    activateUser, createUser, deleteUser, existUser, getUser, updateUser
+    activateDevice, createDevice, deleteDevice, existDevice, getDevice, getAllDevice, updateDevice
 };

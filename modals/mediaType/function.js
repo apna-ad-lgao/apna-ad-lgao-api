@@ -1,64 +1,64 @@
-const existTags = async (DB, id) => {
-    const tagsDetail = await DB.models.Tags.findOne({
+const existMediaType = async (DB, id) => {
+    const mediaTypeDetail = await DB.models.MediaType.findOne({
         where: {id: id}
     });
-    return tagsDetail;
+    return mediaTypeDetail;
 };
 
-const activateTags = async (DB, id) => {
-    let tagsDetail = await existTags(DB, id);
-    if (tagsDetail && tagsDetail.id) {
-        tagsDetail = await DB.models.Tags.update(
+const activateMediaType = async (DB, id) => {
+    let mediaTypeDetail = await existMediaType(DB, id);
+    if (mediaTypeDetail && mediaTypeDetail.id) {
+        mediaTypeDetail = await DB.models.MediaType.update(
             { isHidden: 0, }, 
             { returning: true, where: { id: id }}
         );
-        tagsDetail = await existTags(DB, id);
+        mediaTypeDetail = await existMediaType(DB, id);
     }
-    return tagsDetail;
+    return mediaTypeDetail;
 };
 
-const createTags = async (DB, name) => {
-    let tagsDetail = await DB.models.Tags.create({
+const createMediaType = async (DB, name) => {
+    let mediaTypeDetail = await DB.models.MediaType.create({
         name: name,
     });
-    return tagsDetail;
+    return mediaTypeDetail;
 };
 
-const deleteTags = async (DB, ids) => {
-    let tagsDetails = [];
+const deleteMediaType = async (DB, ids) => {
+    let mediaTypeDetails = [];
     ids.forEach(async(id) => {
-        let tagsDetail = await existTags(DB, id);
-        if (tagsDetail && tagsDetail.id) {
-            tagsDetail = await DB.models.Tags.update(
+        let mediaTypeDetail = await existMediaType(DB, id);
+        if (mediaTypeDetail && mediaTypeDetail.id) {
+            mediaTypeDetail = await DB.models.MediaType.update(
                 { isHidden: 1, }, 
                 { returning: true, where: { id: id }}
             );
-            tagsDetail = await existTags(DB, id);
-            tagsDetails.push(tagsDetail);
+            mediaTypeDetail = await existMediaType(DB, id);
+            mediaTypeDetails.push(mediaTypeDetail);
         } 
     });
-    return tagsDetails;
+    return mediaTypeDetails;
 };
 
-const getTags = async (DB, id) => {
-    return existTags(DB,id);
+const getMediaType = async (DB, id) => {
+    return existMediaType(DB,id);
 };
 
-const getAllTags = async (DB, args) => {
-    const tagsDetail = await DB.models.Tags.findAll({
+const getAllMediaType = async (DB, args) => {
+    const mediaTypeDetail = await DB.models.MediaType.findAll({
         where: args
     });
-    return tagsDetail;
+    return mediaTypeDetail;
 };
 
-const updateTags = async (DB, id, args) => {
-    let tagsDetail = await existTags(DB, id);
-    if (tagsDetail && tagsDetail.id) {
-        tagsDetail = await DB.models.Tags.update(args, { where: { id: id }});
+const updateMediaType = async (DB, id, args) => {
+    let mediaTypeDetail = await existMediaType(DB, id);
+    if (mediaTypeDetail && mediaTypeDetail.id) {
+        mediaTypeDetail = await DB.models.MediaType.update(args, { where: { id: id }});
     }
-    return tagsDetail;
+    return mediaTypeDetail;
 };
 
 module.exports = {
-    activateTags, createTags, deleteTags, existTags, getTags, getAllTags, updateTags
+    activateMediaType, createMediaType, deleteMediaType, existMediaType, getMediaType, getAllMediaType, updateMediaType
 };

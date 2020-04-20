@@ -3,6 +3,15 @@ const { gql, makeExecutableSchema } = require('apollo-server-fastify');
 // country
 const { createCountry, existCountry, getCountry, getAllCountries, getCountries, updateCountry
 } = require('./modals/country/function');
+// device
+const { activateDevice, createDevice, deleteDevice, existDevice, getDevice, getAllDevice,
+  updateDevice } = require('./modals/device/function');
+// industry
+const { activateIndustry, createIndustry, deleteIndustry, existIndustry, getIndustry, getAllIndustry,
+  updateIndustry } = require('./modals/industry/function');
+// mediaType
+const { activateMediaType, createMediaType, deleteMediaType, existMediaType, getMediaType, 
+  getAllMediaType, updateMediaType } = require('./modals/mediaType/function');
 // order history
 const { activateOrderHistory, createOrderHistory, deleteOrderHistory, existOrderHistory, getOrderHistory,
   getAllOrderHistory, updateOrderHistory } = require('./modals/orderHistory/function');
@@ -31,6 +40,30 @@ const typeDefs = gql`
     alpha3code: String
     isonumeric: String
     continent: String
+  }
+  type Device {
+    id: Int
+    uuid: Int
+    model: String
+    platform: String
+    fingerprint: String
+    isHidden: Boolean
+    created: String
+    updated: String
+  }
+  type Industry {
+    id: Int
+    name: String
+    isHidden: Boolean
+    created: String
+    updated: String
+  }
+  type MediaType {
+    id: Int
+    name: String
+    isHidden: Boolean
+    created: String
+    updated: String
   }
   type OrderHistory {
     id: Int
@@ -94,6 +127,13 @@ const typeDefs = gql`
   type Query {
     # country
     countries(id: Int, name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): [Country]
+    # device
+    devices(id: Int, uuid: Int, model: String, platform: String, fingerprint: String, isHidden: Boolean,
+    created: String, updated: String): [Device]
+    # industry
+    industries(name: String, isHidden: Boolean, created: String, updated: String): [Industry]
+    # mediaType
+    mediaTypes(name: String, isHidden: Boolean, created: String, updated: String): [MediaType]
     # orderHistory
     orderHistories(id: Int, total: Int, status: String, fromDate: String, toDate: String, userId: Int, bannerId: Int, isHidden: Boolean, created: String, updated: String): [OrderHistory]
     # state
@@ -111,6 +151,15 @@ const typeDefs = gql`
     # country
     createCountry(name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): Country
     updateCountry(name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): Country
+    # device
+    createDevice(uuid: Int, model: String, platform: String, fingerprint: String): MediaType
+    updateDevice(fingerprint: String, isHidden: Boolean): MediaType
+    # industry
+    createIndustry(name: String): Industry
+    updateIndustry(name: String, isHidden: Boolean): Industry
+    # mediaType
+    createMediaType(name: String): MediaType
+    updateMediaType(name: String, isHidden: Boolean): MediaType
     # orderHistory
     createOrderHistory(id: Int, total: Int, status: String, fromDate: String, toDate: String, userId: Int, bannerId: Int,
     isHidden: Boolean, created: String, updated: String): OrderHistory
@@ -152,6 +201,39 @@ const resolvers = {
       }
       return data;
     },
+    // devices
+    devices: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        data = getAllDevice(DB, args);
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },
+    // industries
+    // industries: async(parent, args, context, info) => {
+    //   let code = null, data = null;
+    //   try {
+    //     const { DB, profile } = context;
+    //     data = getAllIndustry(DB, args);
+    //   } catch(ex) {
+    //     data = ex.message; 
+    //   }
+    //   return data;
+    // },
+    // mediaType
+    mediaTypes: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        data = getAllMediaType(DB, args);
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },        
     // state
     states: async(parent, args, context, info) => {
       let code = null, data = null;
@@ -220,7 +302,7 @@ const resolvers = {
         const { DB, profile } = context;
         const { name, alpha2code, alpha3code, isonumeric, continent } = args;
         if (name || alpha2code || alpha3code || isonumeric || continent) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
-        data = await createCountry(name, alpha2code, alpha3code, isonumeric, continent);
+        data = await createCountry(DB, name, alpha2code, alpha3code, isonumeric, continent);
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
       }
@@ -233,6 +315,89 @@ const resolvers = {
         const { name, alpha2code, alpha3code, isonumeric, continent } = args;
         if (profile.isAdmin && id) {
           data = await updateOrderHistory(DB, name, { alpha2code, alpha3code, isonumeric, continent });
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    // device
+    createDevice: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { uuid, model, platform, fingerprint } = args;
+        if (!uuid || !model || !platform || !fingerprint) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        data = await createDevice(DB, uuid, model, platform, fingerprint);
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateDevice: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { id, fingerprint } = args;
+        if (!fingerprint) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        data = await updateDevice(DB, id, {fingerprint});
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    // mediaType
+    createIndustry: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name } = args;
+        if (!name) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (profile && profile.isAdmin) {
+          data = await createIndustry(DB, name);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateIndustry: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { id, name } = args;
+        if (!name || !id) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (profile && profile.isAdmin) {
+          data = await updateIndustry(DB, id, {name});
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },    
+    // mediaType
+    createMediaType: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name } = args;
+        if (!name) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (profile && profile.isAdmin) {
+          data = await createMediaType(DB, name);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateMediaType: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { id, name } = args;
+        if (!name || !id) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (profile && profile.isAdmin) {
+          data = await updateMediaType(DB, id, {name});
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
