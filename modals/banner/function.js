@@ -17,13 +17,20 @@ const activateBanner = async (DB, id) => {
     return bannerDetail;
 };
 
-const createBanner = async (DB, name, description, image, isParentBanner, addressId) => {
+const createBanner = async (DB, name, description, image, industryId, categoryId, mediaTypeId,
+    ainNumber, facingFrom, towardsTo, size, sft) => {
     let bannerDetail = await DB.models.Banner.create({
         name: name,
         description: description,
         image: image,
-        isParentBanner: isParentBanner,
-        addressId: addressId,
+        industryId: industryId,
+        categoryId: categoryId, 
+        mediaTypeId: mediaTypeId,
+        ainNumber: ainNumber, 
+        facingFrom: facingFrom, 
+        towardsTo: towardsTo, 
+        size: size, 
+        sft: sft
     });
     return bannerDetail;
 };

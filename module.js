@@ -46,6 +46,47 @@ const { activateUserDevice, createUserDevice, deleteUserDevice, existUserDevice,
 
 // The GraphQL schema
 const typeDefs = gql`
+  type Address {
+    id: Int
+    name: String
+    building: String
+    landmark: String
+    street: String
+    pincode: Int
+    stateId: Int
+    isAdmin: Boolean
+    isHidden: Boolean
+    created: String
+    updated: String
+  }
+  type Banner {
+    id: Int
+    name: String
+    description: String
+    image: String
+    addressId: Int
+    latitude: Int
+    longitude: Int
+    industryId: Int
+    categoryId: Int
+    mediaTypeId: Int
+    ainNumber: Int
+    facingFrom: String
+    towardsTo: String
+    size: String
+    sft: Int
+    isLightning: Boolean
+    isDigital: Boolean
+    price: Int
+    currencyId: Int
+    bookingStartDate: String
+    bookingEndDate: String
+    activeStartDate:  String
+    activeEndDate: String
+    isHidden: Boolean
+    created: String
+    updated: String
+  }
   type Campaign {
     id: Int
     name: String
@@ -191,6 +232,14 @@ const typeDefs = gql`
     updated: String 
   }
   type Query {
+    # address
+    addresses(id: Int, name: String, building: String, landmark: String, street: String, pincode: Int,
+    stateId: Int, isAdmin: Int, isHidden: Boolean, created: String, updated: String): [Address]
+    # banner
+    banners(id: Int, name: String, description: String, image: String, addressId: Int, industryId: Int, categoryId: Int, 
+    mediaTypeId: Int, ainNumber: Int, facingFrom: String, towardsTo: String,size: String, sft: Int, isLightning: Boolean, isDigital: Boolean, price: Int, currencyId: Int, bookingStartDate: String,
+    bookingEndDate: String, activeStartDate:  String, activeEndDate: String, isHidden: Boolean, created: String,
+    updated: String): [Banner]
     # campaign
     campaigns(id: Int, name: String, description: String, isHidden: Boolean, created: String, updated: String): [Campaign]
     # campaignTags
@@ -225,6 +274,19 @@ const typeDefs = gql`
     userDevices(id: Int, userId: Int, deviceId: Int, isHidden: Boolean, created: String, updated: String): [UserDevice]
   }
   type Mutation {
+    # address
+    createAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int
+    isAdmin: Boolean): Address
+    updateAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int
+    isAdmin: Boolean, isHidden: Boolean): Address
+    # banner
+    createBanner(name: String, description: String, image: String, addressId: Int, industryId: Int, categoryId: Int, mediaTypeId: Int,
+    ainNumber: Int, facingFrom: String, towardsTo: String, size: String, sft: Int): Banner
+    updateBanner(id: Int, name: String, description: String, image: String, addressId: Int, latitude: Int, longitude: Int,
+    industryId: Int, categoryId: Int, mediaTypeId: Int, ainNumber: Int, facingFrom: String, towardsTo: String,
+    size: String, sft: Int, isLightning: Boolean, isDigital: Boolean, price: Int, currencyId: Int, bookingStartDate: String,
+    bookingEndDate: String, activeStartDate:  String, activeEndDate: String, isHidden: Boolean, created: String,
+    updated: String): Banner
     # campaign
     createCampaign(name: String, description: String): Campaign
     updateCampaign(name: String, description: String, isHidden: Boolean): Campaign
@@ -282,6 +344,32 @@ const typeDefs = gql`
 // A map of functions which return data for the schema.
 const resolvers = {
   Query: {
+    // address
+    addresses: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        if (!profile.isHidden && profile.isAdmin) {
+          data = getAllAddress(DB, args);
+        }
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },
+    // banner
+    banners: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        if (!profile.isHidden) {
+          data = getAllBanner(DB, args);
+        }
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },
     // categories
     categories: async(parent, args, context, info) => {
       let code = null, data = null;
@@ -409,6 +497,67 @@ const resolvers = {
     },
   },
   Mutation: {
+    // address
+    createAddress: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name, building, landmark, street, pincode, stateId, isAdmin} = args;
+        if (!name || !building || !landmark || !street || !pincode || !stateId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (!profile.isHidden) {
+          data = await createAddress(DB, name, building, landmark, street, pincode, stateId, isAdmin);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateAddress: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { id, name, building, landmark, street, pincode, stateId, isAdmin, isHidden } = args;
+        if (!profile.isHidden && id) {
+          data = await updateAddress(DB, id, { name, building, landmark, street, pincode, stateId, isAdmin, isHidden });
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    // banner
+    createBanner: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { name, description, image, addressId, industryId, categoryId, mediaTypeId,
+          ainNumber, facingFrom, towardsTo, size, sft } = args;
+        if (!name || !description || !image || !addressId || !industryId || !categoryId || !mediaTypeId || !ainNumber
+          || !facingFrom || !towardsTo || !size || !sft) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        if (!profile.isHidden && (profile.isAdmin || profile.isOwner || profile.isPartner)) {
+          data = await createBanner(DB, name, description, image, addressId, industryId, categoryId, mediaTypeId,
+            ainNumber, facingFrom, towardsTo, size, sft);
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    },
+    updateBanner: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        const { id, name, description, image,  addressId, industryId, categoryId, mediaTypeId,
+          ainNumber, facingFrom, towardsTo, size, sft, isHidden } = args;
+        if (!profile.isHidden && (profile.isAdmin || profile.isOwner || profile.isPartner) && id) {
+          data = await updateBanner(DB, id, { name, description, name, description, image, addressId, industryId,
+            categoryId, mediaTypeId, ainNumber, facingFrom, towardsTo, size, sft, isHidden });
+        }
+      } catch(ex) {
+        data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
+      }
+      return data;
+    }, 
     // campaign
     createCampaign: async(parent, args, context, info) => {
       let code = null, data = null;
@@ -428,7 +577,7 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, description, isHidden } = args;
+        const { id, name, description, isHidden } = args;
         if ((profile.isAdmin || profile.isOwner || profile.isPartner) && id) {
           data = await updateCampaign(DB, id, { name, description, isHidden });
         }
@@ -456,7 +605,7 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { campaignId, tagsId, isHidden } = args;
+        const { id, campaignId, tagsId, isHidden } = args;
         if ((profile.isAdmin || profile.isOwner || profile.isPartner) && id) {
           data = await updateCampaignTags(DB, id, { campaignId, tagsId, isHidden });
         }
@@ -484,7 +633,7 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, isHidden } = args;
+        const { id, name, isHidden } = args;
         if (profile.isAdmin && id) {
           data = await updateCategory(DB, id, { name, isHidden });
         }
@@ -512,7 +661,7 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, description, image, isParentCompany, addressId, isHidden } = args;
+        const { id, name, description, image, isParentCompany, addressId, isHidden } = args;
         if ((!profile.isHidden || profile.isAdmin) && id) {
           data = await updateCompany(DB, id, { name, description, image, isParentCompany, addressId, isHidden });
         }
@@ -538,7 +687,7 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, alpha2code, alpha3code, isonumeric, continent } = args;
+        const { id, name, alpha2code, alpha3code, isonumeric, continent } = args;
         if (profile.isAdmin && id) {
           data = await updateOrderHistory(DB, name, { alpha2code, alpha3code, isonumeric, continent });
         }
@@ -784,8 +933,9 @@ const resolvers = {
       let data = null;
       try {
         const { DB, profile } = context;
-        if (profile.isAdmin && userId) {
-          data = activateUser(DB, userId);
+        const { id } = args;
+        if (profile.isAdmin && id) {
+          data = activateUser(DB, id);
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 

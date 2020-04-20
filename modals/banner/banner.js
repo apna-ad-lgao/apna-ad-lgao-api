@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     latitude: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
     },
     longitude: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
     },
     industryId: {
       type: DataTypes.NUMBER,
@@ -59,38 +59,39 @@ module.exports = (sequelize, DataTypes) => {
     },
     isLightning: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
     },
     isDigital: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
     },
     price: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
     },
     currencyId: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
     },
     bookingStartDate: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     bookingEndDate: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     activeStartDate: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     activeEndDate: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     isHidden: {
       type: DataTypes.NUMBER,
+      defaultValue: false,
       allowNull: true,
     },
     created: {

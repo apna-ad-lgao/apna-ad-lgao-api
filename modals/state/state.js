@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     isHidden: {
       type: DataTypes.NUMBER,
+      defaultValue: false,
       allowNull: true,
     },
     created: {
