@@ -44,7 +44,7 @@ const getCompany = async (DB, id) => {
     return existCompany(DB,id);
 };
 
-const getAllCompany = async (DB, id) => {
+const getAllCompany = async (DB, args) => {
     const companyDetails = await DB.models.Company.findAll({
         where: args
     });

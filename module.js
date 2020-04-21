@@ -275,10 +275,9 @@ const typeDefs = gql`
   }
   type Mutation {
     # address
-    createAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int
-    isAdmin: Boolean): Address
+    createAddress(name: String!, building: String!, landmark: String!, street: String!, pincode: Int!, stateId: Int!): Address
     updateAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int
-    isAdmin: Boolean, isHidden: Boolean): Address
+    isHidden: Boolean): Address
     # banner
     createBanner(name: String, description: String, image: String, addressId: Int, industryId: Int, categoryId: Int, mediaTypeId: Int,
     ainNumber: Int, facingFrom: String, towardsTo: String, size: String, sft: Int): Banner
@@ -502,10 +501,10 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, building, landmark, street, pincode, stateId, isAdmin} = args;
+        const { name, building, landmark, street, pincode, stateId} = args;
         if (!name || !building || !landmark || !street || !pincode || !stateId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (!profile.isHidden) {
-          data = await createAddress(DB, name, building, landmark, street, pincode, stateId, isAdmin);
+          data = await createAddress(DB, name, building, landmark, street, pincode, stateId);
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
@@ -516,9 +515,9 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { id, name, building, landmark, street, pincode, stateId, isAdmin, isHidden } = args;
+        const { id, name, building, landmark, street, pincode, stateId, isHidden } = args;
         if (!profile.isHidden && id) {
-          data = await updateAddress(DB, id, { name, building, landmark, street, pincode, stateId, isAdmin, isHidden });
+          data = await updateAddress(DB, id, { name, building, landmark, street, pincode, stateId, isHidden });
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 

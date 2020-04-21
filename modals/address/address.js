@@ -24,10 +24,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.NUMBER,
         allowNull: false,
       },
-      isAdmin: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
-      },
       isHidden: {
         type: DataTypes.NUMBER,
         defaultValue: false,
