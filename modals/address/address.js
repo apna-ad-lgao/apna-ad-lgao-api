@@ -24,6 +24,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.NUMBER,
         allowNull: false,
       },
+      userId: {
+        type: DataTypes.NUMBER,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
+        allowNull: false,
+      },
       isHidden: {
         type: DataTypes.NUMBER,
         defaultValue: false,

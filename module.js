@@ -54,6 +54,7 @@ const typeDefs = gql`
     street: String
     pincode: Int
     stateId: Int
+    userId: Int
     isAdmin: Boolean
     isHidden: Boolean
     created: String
@@ -233,8 +234,8 @@ const typeDefs = gql`
   }
   type Query {
     # address
-    addresses(id: Int, name: String, building: String, landmark: String, street: String, pincode: Int,
-    stateId: Int, isAdmin: Int, isHidden: Boolean, created: String, updated: String): [Address]
+    addresses(id: Int, name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int,
+    userId: Int, isAdmin: Int, isHidden: Boolean, created: String, updated: String): [Address]
     # banner
     banners(id: Int, name: String, description: String, image: String, addressId: Int, industryId: Int, categoryId: Int, 
     mediaTypeId: Int, ainNumber: Int, facingFrom: String, towardsTo: String,size: String, sft: Int, isLightning: Boolean, isDigital: Boolean, price: Int, currencyId: Int, bookingStartDate: String,
@@ -275,8 +276,8 @@ const typeDefs = gql`
   }
   type Mutation {
     # address
-    createAddress(name: String!, building: String!, landmark: String!, street: String!, pincode: Int!, stateId: Int!): Address
-    updateAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int
+    createAddress(name: String!, building: String!, landmark: String!, street: String!, pincode: Int!, stateId: Int!, userId: Int!): Address
+    updateAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int, userId: Int!,
     isHidden: Boolean): Address
     # banner
     createBanner(name: String, description: String, image: String, addressId: Int, industryId: Int, categoryId: Int, mediaTypeId: Int,
@@ -305,8 +306,8 @@ const typeDefs = gql`
     createCountry(name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): Country
     updateCountry(name: String, alpha2code: String, alpha3code: String, isonumeric: String, continent: String): Country
     # device
-    createDevice(uuid: Int, model: String, platform: String, fingerprint: String): MediaType
-    updateDevice(fingerprint: String, isHidden: Boolean): MediaType
+    createDevice(uuid: Int, model: String, platform: String, fingerprint: String): Device
+    updateDevice(fingerprint: String, isHidden: Boolean): Device
     # industry
     createIndustry(name: String): Industry
     updateIndustry(name: String, isHidden: Boolean): Industry
@@ -501,10 +502,10 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, building, landmark, street, pincode, stateId} = args;
-        if (!name || !building || !landmark || !street || !pincode || !stateId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        const { name, building, landmark, street, pincode, stateId, userId} = args;
+        if (!name || !building || !landmark || !street || !pincode || !stateId || !userId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (!profile.isHidden) {
-          data = await createAddress(DB, name, building, landmark, street, pincode, stateId);
+          data = await createAddress(DB, name, building, landmark, street, pincode, stateId, userId);
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
@@ -515,9 +516,9 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { id, name, building, landmark, street, pincode, stateId, isHidden } = args;
+        const { id, name, building, landmark, street, pincode, stateId, userId, isHidden } = args;
         if (!profile.isHidden && id) {
-          data = await updateAddress(DB, id, { name, building, landmark, street, pincode, stateId, isHidden });
+          data = await updateAddress(DB, id, { name, building, landmark, street, pincode, stateId, userId, isHidden });
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 

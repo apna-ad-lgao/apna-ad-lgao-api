@@ -28,7 +28,7 @@ module.exports = async (fastify, opts) => {
           password: password,
         }
       });
-      if(successMessage.length != 1) { 
+      if(successMessage && successMessage.length != 1) { 
         opts.expiresIn = 120;  //token expires in 2min
         // const token = req.jwt.sign({ email }, opts);
         const token = request.jwt.sign({

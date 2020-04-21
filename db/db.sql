@@ -2355,24 +2355,6 @@ values
     ('IN ZIP','ZIPL-SEZ/Ahmedabad','RQ',102.0),
     ('IN ZIR','Zirakpur','RL',102.0);
 
-    -- address
-    create table Address (
-    id bigint auto_increment,
-    name varchar(120) not null,
-    building varchar(120) not null, 
-    landmark varchar(320) not null,
-    street varchar(120) not null,
-    pincode int not null,
-    stateId int not null,
-    isHidden boolean default false,
-    created datetime default current_timestamp,
-    updated datetime default current_timestamp on update current_timestamp,
-    index stateIndex (id, stateId),
-    foreign key (stateId)
-        references State(id)
-        on delete cascade,
-    primary key (id) );
-
     -- user
     create table User (
     id bigint auto_increment,
@@ -2389,6 +2371,28 @@ values
     primary key (id),
     unique key (email)
     );
+
+    -- address
+    create table Address (
+    id bigint auto_increment,
+    name varchar(120) not null,
+    building varchar(120) not null, 
+    landmark varchar(320) not null,
+    street varchar(120) not null,
+    pincode int not null,
+    stateId int not null,
+    userId bigint not null,
+    isHidden boolean default false,
+    created datetime default current_timestamp,
+    updated datetime default current_timestamp on update current_timestamp,
+    index stateIndex (id),
+    foreign key (stateId)
+        references State(id)
+        on delete cascade,
+    foreign key (userId)
+        references User(id)
+        on delete cascade,    
+    primary key (id) );
 
     -- Device
 
@@ -2644,5 +2648,5 @@ values
 		primary key (id)
     );
 
-
+insert into apna_ad.User(name, mobile, email, password, image, isAdmin, isPartner) value ('Aditya Kumar', '9871552963', 'adityakumarverma1993@gmail.com', 'Adity@03','', 1, 1);
 

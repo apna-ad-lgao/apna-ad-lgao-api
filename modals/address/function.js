@@ -17,7 +17,7 @@ const activateAddress = async (DB, id) => {
     return addressDetail;
 };
 
-const createAddress = async (DB, name, building, landmark, street, pincode, stateId) => {
+const createAddress = async (DB, name, building, landmark, street, pincode, stateId, userId) => {
     let addressDetail = await DB.models.Address.create({
         name: name,
         building: building,
@@ -25,6 +25,7 @@ const createAddress = async (DB, name, building, landmark, street, pincode, stat
         street: street,
         pincode: pincode,
         stateId: stateId,
+        userId: userId,
     });
     return addressDetail;
 };
