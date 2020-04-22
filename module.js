@@ -315,8 +315,7 @@ const typeDefs = gql`
     createMediaType(name: String): MediaType
     updateMediaType(name: String, isHidden: Boolean): MediaType
     # orderHistory
-    createOrderHistory(id: Int, total: Int, status: String, fromDate: String, toDate: String, userId: Int, bannerId: Int,
-    isHidden: Boolean, created: String, updated: String): OrderHistory
+    createOrderHistory(total: Int, status: String, fromDate: String, toDate: String, userId: Int, bannerId: Int): OrderHistory
     updateOrderHistory(id: Int, total: Int, status: String, fromDate: String, toDate: String, userId: Int, bannerId: Int,
     isHidden: Boolean, created: String, updated: String): OrderHistory
     deleteOrderHistory(ids: [Int]): [OrderHistory]
@@ -331,7 +330,7 @@ const typeDefs = gql`
     activateUser(userId: Int!): User
     createUser(email: String!, password: String!, mobile: String!, name: String!): User
     deleteUser(userId: Int!): User
-    updateUser(id: Int!): User
+    updateUser(id: Int!, email: String!, password: String!, mobile: String!, name: String!, isHidden: Boolean!): User
     # userCompany
     createUserCompany(userId: Int, companyId: Int): UserCompany
     updateUserCompany(id: Int!, userId: Int!, companyId: Int!): UserCompany
@@ -810,6 +809,7 @@ const resolvers = {
       try {
         const { DB, profile } = context;
         const { id, total, status, fromDate, toDate, userId, bannerId, isHidden } = args;
+        if (!id || !total || status || fromDate || toDate || userId || bannerId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (profile.isAdmin && id) {
           data = await updateOrderHistory(DB, id, { total, status, fromDate, toDate, userId, bannerId, isHidden });
         }
@@ -838,6 +838,7 @@ const resolvers = {
       try {
         const { DB, profile } = context;
         const { id, name, countryId, loccode, status, isHidden } = args;
+        if (!name || !id || !countryId || !loccode || !status) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (profile.isAdmin && id) {
           data = await updateState(DB, id, { name, countryId, loccode, status, isHidden });
         }
@@ -880,6 +881,7 @@ const resolvers = {
       try {
         const { DB, profile } = context;
         const { name, id, isHidden } = args;
+        if (!name || !id) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (profile && profile.isAdmin && id && name) {
           data = await updateTags(DB, id, { name, isHidden });
         }
@@ -933,9 +935,10 @@ const resolvers = {
       let data = null;
       try {
         const { DB, profile } = context;
-        const { id } = args;
+        const { id, email, password, mobile, name } = args;
+        if (!name || !id || !email || !password || !mobile) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (profile.isAdmin && id) {
-          data = activateUser(DB, id);
+          data = activateUser(DB, id, { email, password, mobile, name });
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
