@@ -265,6 +265,7 @@ const typeDefs = gql`
     orderHistories(id: Int, total: Int, status: String, fromDate: String, toDate: String, userId: Int, bannerId: Int, isHidden: Boolean, created: String, updated: String): [OrderHistory]
     # state
     states(id: Int, name: String, countryId: Int, loccode: String, status: String, isHidden: Boolean, created: String, updated: String): [State]
+    getStatesForCountry(id: Int, name: String, countryId: Int, loccode: String, status: String, isHidden: Boolean, created: String, updated: String): [State]
     # tags
     tags(id: Int, name: String, isHidden: Boolean, created: String, updated: String): [Tags]
     # user
@@ -276,9 +277,8 @@ const typeDefs = gql`
   }
   type Mutation {
     # address
-    createAddress(name: String!, building: String!, landmark: String!, street: String!, pincode: Int!, stateId: Int!, userId: Int!): Address
-    updateAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int, userId: Int!,
-    isHidden: Boolean): Address
+    createAddress(name: String!, building: String!, landmark: String!, street: String!, pincode: Int!, stateId: Int!): Address
+    updateAddress(name: String, building: String, landmark: String, street: String, pincode: Int, stateId: Int, isHidden: Boolean): Address
     # banner
     createBanner(name: String, description: String, image: String, addressId: Int, industryId: Int, categoryId: Int, mediaTypeId: Int,
     ainNumber: Int, facingFrom: String, towardsTo: String, size: String, sft: Int): Banner
@@ -297,7 +297,7 @@ const typeDefs = gql`
     createCategory(name: String): Category
     updateCategory(name: String, isHidden: Boolean): Category
     # company
-    createCompany(name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int): Company
+    createCompany(name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int, industryId:Int): Company
     updateCompany(id: Int, name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int, latitude: Int, longitude: Int,
     industryId: Int, gst: String, angellist: String, discord: String, facebook: String, github: String, google: String, instagram: String,
     justdial: String, linkedin: String, pinterest: String, slack: String, tiktok: String, twitter: String, web: String, youtube: String,
@@ -418,7 +418,7 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        data = getAllIndustry(DB, args);
+        data = await getAllIndustry(DB, args);
       } catch(ex) {
         data = ex.message; 
       }
@@ -437,6 +437,16 @@ const resolvers = {
     },        
     // state
     states: async(parent, args, context, info) => {
+      let code = null, data = null;
+      try {
+        const { DB, profile } = context;
+        data = getAllState(DB, args);
+      } catch(ex) {
+        data = ex.message; 
+      }
+      return data;
+    },
+    getStatesForCountry: async(parent, args, context, info) => {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
@@ -501,9 +511,10 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, building, landmark, street, pincode, stateId, userId} = args;
-        if (!name || !building || !landmark || !street || !pincode || !stateId || !userId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
-        if (!profile.isHidden) {
+        const { name, building, landmark, street, pincode, stateId } = args;
+        if(profile && !profile.isHidden && profile.isPartner) {
+        if (!name || !building || !landmark || !street || !pincode || !stateId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+          const userId = profile.id;
           data = await createAddress(DB, name, building, landmark, street, pincode, stateId, userId);
         }
       } catch(ex) {
@@ -515,8 +526,9 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { id, name, building, landmark, street, pincode, stateId, userId, isHidden } = args;
-        if (!profile.isHidden && id) {
+        const { id, name, building, landmark, street, pincode, stateId, isHidden } = args;
+        if (profile && !profile.isHidden && id && (profile.isPartner || profile.isAdmin)) {
+          const userId = profile.id;
           data = await updateAddress(DB, id, { name, building, landmark, street, pincode, stateId, userId, isHidden });
         }
       } catch(ex) {
@@ -646,10 +658,10 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, description, image, isParentCompany, addressId } = args;
-        if (!name || !description || !image || !isParentCompany || !addressId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        const { name, description, image, isParentCompany, addressId, industryId } = args;
+        if (!name || !description || !isParentCompany || !addressId || !industryId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (!profile.isHidden || profile.isAdmin) {
-          data = await createCompany(DB, name, description, image, isParentCompany, addressId);
+          data = await createCompany(DB, name, description, image, isParentCompany, addressId, industryId);
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 

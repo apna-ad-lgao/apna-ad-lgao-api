@@ -23,75 +23,77 @@ module.exports = (sequelize, DataTypes) => {
     },
     latitude: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: 0,
     },
     longitude: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: 0,
     },
     industryId: {
       type: DataTypes.NUMBER,
-      allowNull: false,
+      allowNull: true,
     },
     gst: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     angellist: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     discord: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     facebook: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     github: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     google: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     instagram: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     justdial: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     linkedin: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     pinterest: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     slack: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     tiktok: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     twitter: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     web: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     youtube: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     isActive: {
       type: DataTypes.NUMBER,

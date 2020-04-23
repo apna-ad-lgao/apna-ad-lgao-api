@@ -40,7 +40,7 @@ const getIndustry = async (DB, id) => {
     return existIndustry(DB,id);
 };
 
-const getAllIndustry = async (DB, id) => {
+const getAllIndustry = async (DB, args) => {
     const industryDetail = await DB.models.Industry.findAll({
         where: args
     });

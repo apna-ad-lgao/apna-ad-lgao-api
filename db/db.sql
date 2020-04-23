@@ -2650,3 +2650,1031 @@ values
 
 insert into apna_ad.User(name, mobile, email, password, image, isAdmin, isPartner) value ('Aditya Kumar', '9871552963', 'adityakumarverma1993@gmail.com', 'Adity@03','', 1, 1);
 
+/* INSERT QUERY NO: 1 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Accounting'
+);
+
+/* INSERT QUERY NO: 2 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Airlines/Aviation'
+);
+
+/* INSERT QUERY NO: 3 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Alternative Dispute Resolution'
+);
+
+/* INSERT QUERY NO: 4 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Alternative Medicine'
+);
+
+/* INSERT QUERY NO: 5 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Animation'
+);
+
+/* INSERT QUERY NO: 6 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Apparel & Fashion'
+);
+
+/* INSERT QUERY NO: 7 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Architecture & Planning'
+);
+
+/* INSERT QUERY NO: 8 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Arts and Crafts'
+);
+
+/* INSERT QUERY NO: 9 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Automotive'
+);
+
+/* INSERT QUERY NO: 10 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Aviation & Aerospace'
+);
+
+/* INSERT QUERY NO: 11 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Banking'
+);
+
+/* INSERT QUERY NO: 12 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Biotechnology'
+);
+
+/* INSERT QUERY NO: 13 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Broadcast Media'
+);
+
+/* INSERT QUERY NO: 14 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Building Materials'
+);
+
+/* INSERT QUERY NO: 15 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Business Supplies and Equipment'
+);
+
+/* INSERT QUERY NO: 16 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Capital Markets'
+);
+
+/* INSERT QUERY NO: 17 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Chemicals'
+);
+
+/* INSERT QUERY NO: 18 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Civic & Social Organization'
+);
+
+/* INSERT QUERY NO: 19 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Civil Engineering'
+);
+
+/* INSERT QUERY NO: 20 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Commercial Real Estate'
+);
+
+/* INSERT QUERY NO: 21 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Computer & Network Security'
+);
+
+/* INSERT QUERY NO: 22 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Computer Games'
+);
+
+/* INSERT QUERY NO: 23 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Computer Hardware'
+);
+
+/* INSERT QUERY NO: 24 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Computer Networking'
+);
+
+/* INSERT QUERY NO: 25 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Computer Software'
+);
+
+/* INSERT QUERY NO: 26 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Construction'
+);
+
+/* INSERT QUERY NO: 27 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Consumer Electronics'
+);
+
+/* INSERT QUERY NO: 28 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Consumer Goods'
+);
+
+/* INSERT QUERY NO: 29 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Consumer Services'
+);
+
+/* INSERT QUERY NO: 30 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Cosmetics'
+);
+
+/* INSERT QUERY NO: 31 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Dairy'
+);
+
+/* INSERT QUERY NO: 32 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Defense & Space'
+);
+
+/* INSERT QUERY NO: 33 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Design'
+);
+
+/* INSERT QUERY NO: 34 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Education Management'
+);
+
+/* INSERT QUERY NO: 35 */
+INSERT INTO Industry(name)
+VALUES
+(
+'E-Learning'
+);
+
+/* INSERT QUERY NO: 36 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Electrical/Electronic Manufacturing'
+);
+
+/* INSERT QUERY NO: 37 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Entertainment'
+);
+
+/* INSERT QUERY NO: 38 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Environmental Services'
+);
+
+/* INSERT QUERY NO: 39 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Events Services'
+);
+
+/* INSERT QUERY NO: 40 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Executive Office'
+);
+
+/* INSERT QUERY NO: 41 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Facilities Services'
+);
+
+/* INSERT QUERY NO: 42 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Farming'
+);
+
+/* INSERT QUERY NO: 43 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Financial Services'
+);
+
+/* INSERT QUERY NO: 44 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Fine Art'
+);
+
+/* INSERT QUERY NO: 45 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Fishery'
+);
+
+/* INSERT QUERY NO: 46 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Food & Beverages'
+);
+
+/* INSERT QUERY NO: 47 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Food Production'
+);
+
+/* INSERT QUERY NO: 48 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Fund-Raising'
+);
+
+/* INSERT QUERY NO: 49 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Furniture'
+);
+
+/* INSERT QUERY NO: 50 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Gambling & Casinos'
+);
+
+/* INSERT QUERY NO: 51 */
+INSERT INTO Industry(name)
+VALUES
+(
+'"Glass'
+);
+
+/* INSERT QUERY NO: 52 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Government Administration'
+);
+
+/* INSERT QUERY NO: 53 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Government Relations'
+);
+
+/* INSERT QUERY NO: 54 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Graphic Design'
+);
+
+/* INSERT QUERY NO: 55 */
+INSERT INTO Industry(name)
+VALUES
+(
+'"Health'
+);
+
+/* INSERT QUERY NO: 56 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Higher Education'
+);
+
+/* INSERT QUERY NO: 57 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Hospital & Health Care'
+);
+
+/* INSERT QUERY NO: 58 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Hospitality'
+);
+
+/* INSERT QUERY NO: 59 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Human Resources'
+);
+
+/* INSERT QUERY NO: 60 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Import and Export'
+);
+
+/* INSERT QUERY NO: 61 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Individual & Family Services'
+);
+
+/* INSERT QUERY NO: 62 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Industrial Automation'
+);
+
+/* INSERT QUERY NO: 63 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Information Services'
+);
+
+/* INSERT QUERY NO: 64 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Information Technology and Services'
+);
+
+/* INSERT QUERY NO: 65 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Insurance'
+);
+
+/* INSERT QUERY NO: 66 */
+INSERT INTO Industry(name)
+VALUES
+(
+'International Affairs'
+);
+
+/* INSERT QUERY NO: 67 */
+INSERT INTO Industry(name)
+VALUES
+(
+'International Trade and Development'
+);
+
+/* INSERT QUERY NO: 68 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Internet'
+);
+
+/* INSERT QUERY NO: 69 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Investment Banking'
+);
+
+/* INSERT QUERY NO: 70 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Investment Management'
+);
+
+/* INSERT QUERY NO: 71 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Judiciary'
+);
+
+/* INSERT QUERY NO: 72 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Law Enforcement'
+);
+
+/* INSERT QUERY NO: 73 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Law Practice'
+);
+
+/* INSERT QUERY NO: 74 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Legal Services'
+);
+
+/* INSERT QUERY NO: 75 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Legislative Office'
+);
+
+/* INSERT QUERY NO: 76 */
+INSERT INTO Industry(name)
+VALUES
+(
+'"Leisure'
+);
+
+/* INSERT QUERY NO: 77 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Libraries'
+);
+
+/* INSERT QUERY NO: 78 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Logistics and Supply Chain'
+);
+
+/* INSERT QUERY NO: 79 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Luxury Goods & Jewelry'
+);
+
+/* INSERT QUERY NO: 80 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Machinery'
+);
+
+/* INSERT QUERY NO: 81 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Management Consulting'
+);
+
+/* INSERT QUERY NO: 82 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Maritime'
+);
+
+/* INSERT QUERY NO: 83 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Market Research'
+);
+
+/* INSERT QUERY NO: 84 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Marketing and Advertising'
+);
+
+/* INSERT QUERY NO: 85 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Mechanical or Industrial Engineering'
+);
+
+/* INSERT QUERY NO: 86 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Media Production'
+);
+
+/* INSERT QUERY NO: 87 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Medical Devices'
+);
+
+/* INSERT QUERY NO: 88 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Medical Practice'
+);
+
+/* INSERT QUERY NO: 89 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Mental Health Care'
+);
+
+/* INSERT QUERY NO: 90 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Military'
+);
+
+/* INSERT QUERY NO: 91 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Mining & Metals'
+);
+
+/* INSERT QUERY NO: 92 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Motion Pictures and Film'
+);
+
+/* INSERT QUERY NO: 93 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Museums and Institutions'
+);
+
+/* INSERT QUERY NO: 94 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Music'
+);
+
+/* INSERT QUERY NO: 95 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Nanotechnology'
+);
+
+/* INSERT QUERY NO: 96 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Newspapers'
+);
+
+/* INSERT QUERY NO: 97 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Non-Profit Organization Management'
+);
+
+/* INSERT QUERY NO: 98 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Oil & Energy'
+);
+
+/* INSERT QUERY NO: 99 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Online Media'
+);
+
+/* INSERT QUERY NO: 100 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Outsourcing/Offshoring'
+);
+
+/* INSERT QUERY NO: 101 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Package/Freight Delivery'
+);
+
+/* INSERT QUERY NO: 102 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Packaging and Containers'
+);
+
+/* INSERT QUERY NO: 103 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Paper & Forest Products'
+);
+
+/* INSERT QUERY NO: 104 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Performing Arts'
+);
+
+/* INSERT QUERY NO: 105 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Pharmaceuticals'
+);
+
+/* INSERT QUERY NO: 106 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Philanthropy'
+);
+
+/* INSERT QUERY NO: 107 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Photography'
+);
+
+/* INSERT QUERY NO: 108 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Plastics'
+);
+
+/* INSERT QUERY NO: 109 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Political Organization'
+);
+
+/* INSERT QUERY NO: 110 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Primary/Secondary Education'
+);
+
+/* INSERT QUERY NO: 111 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Printing'
+);
+
+/* INSERT QUERY NO: 112 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Professional Training & Coaching'
+);
+
+/* INSERT QUERY NO: 113 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Program Development'
+);
+
+/* INSERT QUERY NO: 114 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Public Policy'
+);
+
+/* INSERT QUERY NO: 115 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Public Relations and Communications'
+);
+
+/* INSERT QUERY NO: 116 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Public Safety'
+);
+
+/* INSERT QUERY NO: 117 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Publishing'
+);
+
+/* INSERT QUERY NO: 118 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Railroad Manufacture'
+);
+
+/* INSERT QUERY NO: 119 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Ranching'
+);
+
+/* INSERT QUERY NO: 120 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Real Estate'
+);
+
+/* INSERT QUERY NO: 121 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Recreational Facilities and Services'
+);
+
+/* INSERT QUERY NO: 122 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Religious Institutions'
+);
+
+/* INSERT QUERY NO: 123 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Renewables & Environment'
+);
+
+/* INSERT QUERY NO: 124 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Research'
+);
+
+/* INSERT QUERY NO: 125 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Restaurants'
+);
+
+/* INSERT QUERY NO: 126 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Retail'
+);
+
+/* INSERT QUERY NO: 127 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Security and Investigations'
+);
+
+/* INSERT QUERY NO: 128 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Semiconductors'
+);
+
+/* INSERT QUERY NO: 129 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Shipbuilding'
+);
+
+/* INSERT QUERY NO: 130 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Sporting Goods'
+);
+
+/* INSERT QUERY NO: 131 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Sports'
+);
+
+/* INSERT QUERY NO: 132 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Staffing and Recruiting'
+);
+
+/* INSERT QUERY NO: 133 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Supermarkets'
+);
+
+/* INSERT QUERY NO: 134 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Telecommunications'
+);
+
+/* INSERT QUERY NO: 135 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Textiles'
+);
+
+/* INSERT QUERY NO: 136 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Think Tanks'
+);
+
+/* INSERT QUERY NO: 137 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Tobacco'
+);
+
+/* INSERT QUERY NO: 138 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Translation and Localization'
+);
+
+/* INSERT QUERY NO: 139 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Transportation/Trucking/Railroad'
+);
+
+/* INSERT QUERY NO: 140 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Utilities'
+);
+
+/* INSERT QUERY NO: 141 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Venture Capital & Private Equity'
+);
+
+/* INSERT QUERY NO: 142 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Veterinary'
+);
+
+/* INSERT QUERY NO: 143 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Warehousing'
+);
+
+/* INSERT QUERY NO: 144 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Wholesale'
+);
+
+/* INSERT QUERY NO: 145 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Wine and Spirits'
+);
+
+/* INSERT QUERY NO: 146 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Wireless'
+);
+
+/* INSERT QUERY NO: 147 */
+INSERT INTO Industry(name)
+VALUES
+(
+'Writing and Editing'
+);
