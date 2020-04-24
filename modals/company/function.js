@@ -17,13 +17,14 @@ const activateCompany = async (DB, id) => {
     return companyDetail;
 };
 
-const createCompany = async (DB, name, description, image, isParentCompany, addressId, industryId) => {
+const createCompany = async (DB, name, description, image, isParentCompany, addressId, gst, industryId) => {
     let companyDetail = await DB.models.Company.create({
         name: name,
         description: description,
         image: image,
         isParentCompany: isParentCompany,
         addressId: addressId,
+        gst: gst,
         industryId: industryId,
     });
     return companyDetail;

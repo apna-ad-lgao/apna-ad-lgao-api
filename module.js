@@ -297,7 +297,7 @@ const typeDefs = gql`
     createCategory(name: String): Category
     updateCategory(name: String, isHidden: Boolean): Category
     # company
-    createCompany(name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int, industryId:Int): Company
+    createCompany(name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int, gst: Int, industryId:Int): Company
     updateCompany(id: Int, name: String, description: String, image: String, isParentCompany: Boolean, addressId: Int, latitude: Int, longitude: Int,
     industryId: Int, gst: String, angellist: String, discord: String, facebook: String, github: String, google: String, instagram: String,
     justdial: String, linkedin: String, pinterest: String, slack: String, tiktok: String, twitter: String, web: String, youtube: String,
@@ -658,10 +658,10 @@ const resolvers = {
       let code = null, data = null;
       try {
         const { DB, profile } = context;
-        const { name, description, image, isParentCompany, addressId, industryId } = args;
-        if (!name || !description || !isParentCompany || !addressId || !industryId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
+        const { name, description, image, isParentCompany, addressId, gst, industryId } = args;
+        if (!name || !description || !isParentCompany || !addressId || !gst || !industryId) throw new Error(AUTH_ERRORS.INVALID_DETAIL.message);
         if (!profile.isHidden || profile.isAdmin) {
-          data = await createCompany(DB, name, description, image, isParentCompany, addressId, industryId);
+          data = await createCompany(DB, name, description, image, isParentCompany, addressId, gst, industryId);
         }
       } catch(ex) {
         data = { message: ex.message || EXCEPTIONS.SOME_ERROR.message }; 
