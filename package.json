@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-fastify": "^2.10.1",
+    "apollo-server-fastify": "^2.14.2",
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "cross-env": "^7.0.0",
